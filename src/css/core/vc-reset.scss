@@ -1,0 +1,12 @@
+.vc-notice {
+	top: 80px !important;
+	z-index: 1001 !important; // 因为modal的z-index为1002
+}
+.vc-notice__wrapper {
+	background: #eff5ff !important;
+	box-shadow: 0 0 1px 0 #dce7f9 !important;
+
+}
+.vc-notice__content {
+	font-size: 12px;
+}
