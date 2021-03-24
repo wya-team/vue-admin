@@ -1,3 +1,4 @@
 export const getSettingTopRoutes = (auth) => ({
-	'/setting/main': '设置',
+	'/setting/task': '任务管理',
+	'/setting/log': '操作日志',
 });

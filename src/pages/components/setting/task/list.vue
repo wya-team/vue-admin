@@ -2,12 +2,13 @@
 	<vc-paging
 		ref="tableTarget"
 		:data-source="listInfo.data"
-		:count="listInfo.count"
+		:total="listInfo.total"
 		:reset="listInfo.reset"
+		:count="listInfo.count"
 		:history="true"
 		:load-data="loadData"
 		mode="table"
-		class="g-m-t-20 v-setting-log-list"
+		class="g-m-t-20 v-setting-task-list"
 		@page-size-change="handleChangePageSize"
 	>
 		<xls-item />
@@ -31,14 +32,14 @@ export default {
 	},
 	computed: {
 		listInfo() {
-			return this.$store.state.settingLog.listInfo;
+			return this.$store.state.settingTask.listInfo;
 		}
 	},
 	methods: {
 		loadData(page, pageSize) {
 			let { query = {} } = URL.parse();
 			return this.request({
-				url: 'SETTING_LOG_LIST_GET',
+				url: 'SETTING_TASK_LIST_GET',
 				type: 'GET',
 				param: {
 					...query,
@@ -52,7 +53,7 @@ export default {
 			});
 		},
 		handleChangePageSize() {
-			this.$store.commit('SETTING_LOG_LIST_INIT');
+			this.$store.commit('SETTING_TASK_LIST_INIT');
 		}
 	}
 };

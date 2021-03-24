@@ -8,3 +8,12 @@
 .g-bg-main {
 	background-color: $main;
 }
+.g-lh-50 {
+	line-height: 50px;
+}
+.g-filter-label {
+	color: #333;
+	display: inline-block;
+	width: calc(5em + 24px);
+	text-align: right;
+}
