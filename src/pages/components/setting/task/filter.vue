@@ -44,7 +44,7 @@ import { URL } from '@utils/utils';
 import { debounce } from 'lodash';
 
 export default {
-	name: 'xls-filter',
+	name: 'tpl-filter',
 	components: {
 	},
 	data() {

@@ -4,6 +4,6 @@ const routes = require('./modules/root');
 
 module.exports = {
 	dir: `${process.cwd()}/src/pages/`, 
-	project: 'xls',
+	project: 'tpl',
 	routes
 };

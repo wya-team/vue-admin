@@ -18,7 +18,7 @@
 2. 元素名称使用连字符分隔单词，自定义元素切勿使用保留字。
 
     1. `<vc-paging />` wya-vc组件使用
-    2. `<xls-button />` 项目内部自定义组件使用
+    2. `<tpl-button />` 项目内部自定义组件使用
 
 3. 验证组件的 `props`。
 4. 自定义事件属性名称 handle[]：如：`@change="handleChange"`。

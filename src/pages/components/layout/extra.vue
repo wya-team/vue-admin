@@ -35,7 +35,7 @@
 import { Storage } from '@utils/utils';
 
 export default {
-	name: 'xls-layout-extra',
+	name: 'tpl-layout-extra',
 	components: {
 
 	},

@@ -22,11 +22,11 @@
 					</vc-clipboard>
 				</div>
 			</div>
-			<xls-timeline 
+			<tpl-timeline 
 				v-if="info.logistics.length > 0" 
 				class="__logistics"
 			>
-				<xls-timeline-item 
+				<tpl-timeline-item 
 					v-for="(logistic, index) in info.logistics"
 					:key="index"
 					:border-color="index === 0 ? '#5495F6' : '#CDCDCD'"
@@ -35,8 +35,8 @@
 						<div class="g-c-333 g-break">{{ logistic.context }}</div>
 						<div class="g-c-999 g-m-t-5">{{ logistic.time }}</div>
 					</div>
-				</xls-timeline-item>
-			</xls-timeline>
+				</tpl-timeline-item>
+			</tpl-timeline>
 			<div v-else class="g-flex-cc g-fd-c __empty">
 				<img :src="LogisticsEmptyImg" style="width: 150px" class="g-m-b-16">
 				<div class="g-tc">

@@ -10,7 +10,7 @@
 		class="g-m-t-20 v-setting-log-list"
 		@page-size-change="handleChangePageSize"
 	>
-		<xls-item />
+		<tpl-item />
 	</vc-paging>
 </template>
 
@@ -19,9 +19,9 @@ import { URL } from '@utils/utils';
 import Item from './item';
 
 export default {
-	name: 'xls-table',
+	name: 'tpl-table',
 	components: {
-		'xls-item': Item,
+		'tpl-item': Item,
 	},
 	data() {
 		const { query } = this.$route;

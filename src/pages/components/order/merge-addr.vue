@@ -27,7 +27,7 @@
 							placement="top"
 							theme="dark"
 						>
-							<xls-address-txt
+							<tpl-address-txt
 								:length="20"
 								:address="{
 									country: item.country_name,
@@ -40,7 +40,7 @@
 							...
 							<template #content="">
 								<div style="width: 200px; word-break: break-all">
-									<xls-address-txt
+									<tpl-address-txt
 										:address="{
 											country: item.country_name,
 											province: item.province_name,
@@ -53,7 +53,7 @@
 							</template>
 						</vc-popover>
 					</template>
-					<xls-address-txt
+					<tpl-address-txt
 						v-else
 						:address="{
 							country: item.country_name,

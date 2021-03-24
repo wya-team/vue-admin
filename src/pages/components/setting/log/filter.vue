@@ -92,7 +92,7 @@ import API_ROOT from '@stores/apis/root';
 import { debounce } from 'lodash';
 
 export default {
-	name: 'xls-filter',
+	name: 'tpl-filter',
 	components: {
 	},
 	data() {

@@ -21,7 +21,7 @@
 import { getTopMenus } from "./menu/top/root";
 
 export default {
-	name: 'xls-layout-top',
+	name: 'tpl-layout-top',
 	components: {
 
 	},
@@ -36,7 +36,7 @@ export default {
 	computed: {
 		currentRoute() {
 			let path = this.$route.path.split('/');
-			let index = path.indexOf('xls');
+			let index = path.indexOf('tpl');
 			if (index > -1) path.splice(index, 1);
 			path.length > 3 && path.splice(-1, 1);
 

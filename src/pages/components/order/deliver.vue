@@ -20,7 +20,7 @@
 				<vc-form-item class="_form-text-item" label="收货人：">{{ formValidate.consignee }}</vc-form-item>
 				<vc-form-item class="_form-text-item" label="收货人电话：">{{ formValidate.mobile }}</vc-form-item>
 				<vc-form-item class="_form-text-item1" label="收货地址：">
-					<xls-address-txt
+					<tpl-address-txt
 						:address="{
 							country: formValidate.country_name,
 							province: formValidate.province_name,

@@ -44,7 +44,7 @@ import { getChildMenus } from './menu/left/root';
 import { getTopMenus } from "./menu/top/root";
 
 export default {
-	name: 'xls-layout-left',
+	name: 'tpl-layout-left',
 	components: {
 
 	},

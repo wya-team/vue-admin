@@ -26,7 +26,7 @@
 
 <script>
 export default {
-	name: 'xls-layout',
+	name: 'tpl-layout',
 	components: {
 	},
 	beforeRouteEnter(to, from, next) {

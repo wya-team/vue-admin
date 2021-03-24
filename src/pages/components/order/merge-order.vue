@@ -32,8 +32,8 @@
 					<template #default="{ row }">
 						<div class="g-flex-cc">
 							<div class="g-m-r-8" style="max-width: 270px">
-								<xls-relation-chain :data="row.items">
-									<xls-img-tip 
+								<tpl-relation-chain :data="row.items">
+									<tpl-img-tip 
 										v-for="(item) in row.items"
 										:key="item.product_id"
 										:src="item.product_image"
@@ -41,7 +41,7 @@
 										class=" g-m-r-8" 
 										img-class="g-imgr-56" 
 									/>
-								</xls-relation-chain>
+								</tpl-relation-chain>
 							</div>
 							共{{ row.items | totalProduct }}件
 						</div>
@@ -67,7 +67,7 @@ import { MergeAddr } from './merge-addr';
 const config = {
 	name: 'order-merge-modal',
 	components: {
-		'xls-img-tip': ImgTip
+		'tpl-img-tip': ImgTip
 	},
 	props: {
 		orderID: [String, Number],
