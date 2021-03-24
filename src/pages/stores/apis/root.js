@@ -2,10 +2,16 @@ import { RegEx } from '@wya/utils';
 import { DEBUG } from '../../constants/constants';
 import _common from './_common';
 import login from './login';
+import product from './product';
+import order from './order';
+import setting from './setting';
 
 const API = {
 	..._common,
 	...login,
+	...product,
+	...order,
+	...setting
 };
 
 class APIManager {

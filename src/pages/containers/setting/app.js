@@ -1,9 +1,10 @@
 export const settingConfig = [
-	{ 
-		path: '/setting/main', 
-		name: 'setting-main',
+	{
+		path: '/setting/log',
+		name: 'setting-log',
+		meta: { title: '' },
 		components: [
-			() => import('./modules/setting-main.vue'),
+			() => import('./modules/setting-log.vue'),
 			'left',
 			'top'
 		]
