@@ -1,74 +1,37 @@
 <template>
 	<div>
-		<vc-button 
+		<vc-button
 			type="primary"
-			class="g-m-b-16"
-			@click="handleExport"
+			class="g-m-b-24"
+			@click="handleAdd"
 		>
-			导出
+			新增分类
 		</vc-button>
 		<div>
-			<span>退款信息：</span>
+			<span>分类名称：</span>
 			<vc-input
-				v-model="keywords.search" 
-				placeholder="请输入关键字搜索" 
-				style="width: 240px" 
+				v-model="keywords.category_name"
+				placeholder="请输入分类名称"
+				style="width: 240px"
 				clearable
 				@enter="handleSearch"
 				@change="handleInputChange"
 			/>
-			<vc-button 
+			<vc-button
 				type="primary"
 				class="g-m-l-24"
 				@click="handleSearch"
 			>
-				搜索
+				查询
 			</vc-button>
-			<span
-				class="g-m-l-12 g-c-black-dark g-fs-12 g-pointer g-no-select"
-				@click="handleToggle"
-			>
-				{{ show ? '收起' : '展开' }}
-				<vc-icon :type="show ? 'triangle-up' : 'triangle-down'" class="g-fs-12" />
-			</span>
 		</div>
-		<vc-expand v-model="show">
-			<div class="g-pd-t-16">
-				<div
-					class="g-search-form g-lh-50 g-bg-f4"
-					style="padding-top: 5px; padding-bottom: 5px"
-				>
-					<div class="g-flex g-fw-w" style="min-width: 720px">
-						<div>
-							<span class="g-c-333 g-w-100">退款方式：</span>
-							<vc-input
-								v-model="keywords.name" 
-								style="width: 160px" 
-								placeholder="请输入公司名称" 
-								@enter="handleSearch"
-								@change="handleInputChange"
-							/>
-						</div>
-						<div>
-							<span class="g-c-333 g-w-100">退款传方式：</span>
-							<vc-input
-								v-model="keywords.name" 
-								style="width: 220px" 
-								placeholder="请输入公司名称" 
-								@enter="handleSearch"
-								@change="handleInputChange"
-							/>
-						</div>
-					</div>
-				</div>
-			</div>
-		</vc-expand>
 	</div>
 </template>
 
 <script>
 import { URL } from '@utils/utils';
 import { debounce } from 'lodash';
+import { Editor } from './popup/editor';
 
 export default {
 	name: 'tpl-filter',
@@ -78,10 +41,9 @@ export default {
 		const { query = {} } = this.$route;
 		return {
 			keywords: {
-				search: String(query.search || ''),
+				category_name: String(query.category_name || ''),
 				name: String(query.name || ''),
 			},
-			show: false,
 		};
 	},
 	methods: {
@@ -91,14 +53,11 @@ export default {
 				...this.keywords,
 			};
 			this.$router.replace(URL.merge({
-				path: '/product/category', 
+				path: '/product/category',
 				query
 			}));
 			this.$store.commit('PRODUCT_CATEGORY_LIST_INIT');
 		}, 300),
-		handleToggle() {
-			this.show = !this.show;
-		},
 		handleChange(obj) {
 			let type = Object.keys(obj)[0];
 			let value = obj[type];
@@ -110,7 +69,16 @@ export default {
 				this.handleSearch();
 			}
 		},
-		handleExport() {}
+		handleAdd() {
+			Editor.popup({
+				level: 1,
+				trigger: 'filter'
+			}).then((res) => {
+				this.$store.commit('PRODUCT_CATEGORY_LIST_INIT');
+			}).catch((res) => {
+				console.log(res, 'close');
+			});
+		}
 	}
 };
 

@@ -3,11 +3,18 @@ import { initPage } from '@utils/utils';
 const initialState = {
 	listInfo: {
 		...initPage
-	}
+	},
+	tableKey: 0
 };
 
 const mutations = {
 	PRODUCT_CATEGORY_LIST_GET_SUCCESS(state, { data, param: { type, page } }) {
+		// TODO: tpl
+		for (let i = 0; i < data.list.length; i++) {
+			if (data.list[i].child_category_num > 0) {
+				data.list[i].hasChildren = true;
+			}	
+		}
 		state.listInfo = {
 			...state.listInfo,
 			...data.page,
@@ -17,13 +24,15 @@ const mutations = {
 			}
 		};
 	},
-	PRODUCT_CATEGORY_LIST_RESET(state, { type }) {
+	PRODUCT_CATEGORY_LIST_RESET(state) {
+		state.tableKey += 1;
 		state.listInfo = {
 			...initialState.listInfo,
 			reset: true
 		};
 	},
 	PRODUCT_CATEGORY_LIST_INIT(state, payload) {
+		state.tableKey += 1;
 		state.listInfo = {
 			...initialState.listInfo
 		};
