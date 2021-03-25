@@ -214,7 +214,7 @@ export default {
 		height: 270px;
 		padding: 27px 32px 18px;
 		background:$white;
-		box-shadow: 0px 0px 7px 1px $shadow-18;
+		box-shadow: 0px 0px 7px 1px rgba(0, 0, 0, 0.18);
 		z-index: 999;
 		.c-slider__content {
 			position: relative;
