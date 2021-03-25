@@ -1,74 +1,51 @@
 <template>
-	<div>
+	<div class="v-order-setting-logistics g-m-b-24">
 		<vc-button 
-			type="primary"
-			class="g-m-b-16"
-			@click="handleExport"
+			type="primary" 
+			class="g-m-b-24"
+			@click="handleEditor"
 		>
-			导出
-		</vc-button>
-		<div>
-			<span>退款信息：</span>
-			<vc-input
-				v-model="keywords.search" 
-				placeholder="请输入关键字搜索" 
-				style="width: 240px" 
-				clearable
-				@enter="handleSearch"
-				@change="handleInputChange"
-			/>
+			新增物流公司
+		</vc-button> 
+		<div class="g-flex g-m-b-24">
+			<div class="g-flex-ac">
+				<span>物流公司：</span>
+				<vc-input 
+					v-model="keywords.express_name" 
+					placeholder="请输入物流公司名称" 
+					clearable
+					style="width: 240px;"
+					@enter="handleSearch"
+					@change="handleInputChange"
+				/>
+			</div>
+			<div class="g-m-l-32">
+				<span>选择状态：</span>
+				<vc-select
+					v-model="keywords.is_use"
+					clearable
+					placeholder="请选择状态"
+					style="width: 240px;"
+					@change="handleSearch"
+				>
+					<vc-option value="0">关闭</vc-option>
+					<vc-option value="1">开启</vc-option>
+				</vc-select>
+			</div>
 			<vc-button 
 				type="primary"
 				class="g-m-l-24"
 				@click="handleSearch"
 			>
-				搜索
+				查询
 			</vc-button>
-			<span
-				class="g-m-l-12 g-c-black-dark g-fs-12 g-pointer g-no-select"
-				@click="handleToggle"
-			>
-				{{ show ? '收起' : '展开' }}
-				<vc-icon :type="show ? 'triangle-up' : 'triangle-down'" class="g-fs-12" />
-			</span>
 		</div>
-		<vc-expand v-model="show">
-			<div class="g-pd-t-16">
-				<div
-					class="g-search-form g-lh-50 g-bg-f4"
-					style="padding-top: 5px; padding-bottom: 5px"
-				>
-					<div class="g-flex g-fw-w" style="min-width: 720px">
-						<div>
-							<span class="g-c-333 g-w-100">退款方式：</span>
-							<vc-input
-								v-model="keywords.name" 
-								style="width: 160px" 
-								placeholder="请输入公司名称" 
-								@enter="handleSearch"
-								@change="handleInputChange"
-							/>
-						</div>
-						<div>
-							<span class="g-c-333 g-w-100">退款传方式：</span>
-							<vc-input
-								v-model="keywords.name" 
-								style="width: 220px" 
-								placeholder="请输入公司名称" 
-								@enter="handleSearch"
-								@change="handleInputChange"
-							/>
-						</div>
-					</div>
-				</div>
-			</div>
-		</vc-expand>
 	</div>
 </template>
-
 <script>
-import { URL } from '@utils/utils';
 import { debounce } from 'lodash';
+import { URL } from '@utils/utils';
+import { Editor } from './popup/editor';
 
 export default {
 	name: 'tpl-filter',
@@ -78,44 +55,62 @@ export default {
 		const { query = {} } = this.$route;
 		return {
 			keywords: {
-				search: String(query.search || ''),
-				name: String(query.name || ''),
+				...query,
+				is_use: '',
+				express_name: ''
 			},
-			show: false,
 		};
 	},
+	computed: {
+		setting() {
+			return this.$store.state.orderSettingLogistics.setting;
+		}
+	},
+	created() {
+	},
 	methods: {
+		handleSubmit(query) {
+			this.$router.replace(URL.merge({
+				path: '/order/setting/logistics',
+				query,
+			}));
+			this.$store.commit('ORDER_SETTING_LOGISTICS_LIST_INIT');
+		},
+		handleEditor() {
+			Editor.popup({
+				store: this.$store,
+			}).then(res => {
+			}).catch(e => {
+				console.log(e);
+			});
+		},
 		handleSearch: debounce(function (value) {
 			let query = {
 				...this.$route.query,
 				...this.keywords,
 			};
-			this.$router.replace(URL.merge({
-				path: '/order/setting/logistics', 
-				query
-			}));
-			this.$store.commit('ORDER_SETTING_LOGISTICS_LIST_INIT');
+			this.handleSubmit(query);
 		}, 300),
-		handleToggle() {
-			this.show = !this.show;
-		},
-		handleChange(obj) {
-			let type = Object.keys(obj)[0];
-			let value = obj[type];
-			this.keywords[type] = value;
-			this.handleSearch();
-		},
 		handleInputChange(e) {
 			if (!e.target.value) {
 				this.handleSearch();
 			}
-		},
-		handleExport() {}
-	}
+		}
+	},
 };
-
 </script>
 
 <style lang="scss">
-
+.v-order-setting-logistics {
+	._coolapse-header {
+		height: 40px;
+		line-height: 40px;
+		.title {
+			margin-left: 64px;
+		}
+		.state {
+			margin-right: 48px;
+		}
+	}
+}
 </style>
