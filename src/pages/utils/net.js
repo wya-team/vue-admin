@@ -35,6 +35,10 @@ const otherFn = ({ response }) => {
 
 const beforeFn = ({ options }) => {
 	// TODO: 注入token
+	return {
+		...options,
+		timeout: 0, // TODO: tpl
+	};
 };
 const afterFn = ({ options, response }) => {
 	let {
