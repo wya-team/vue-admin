@@ -1,12 +1,14 @@
-import { orderAfterSale } from './after-sale';
 import { orderMainAll } from './main-all';
+import { orderAfterSale } from './after-sale';
+import { orderBatch } from './batch';
 import { orderSettingTemplate } from './setting-template';
 import { orderSettingLogistics } from './setting-logistics';
 import { orderSettingSelfAddr } from './setting-self-addr';
 
 export default {
-	orderAfterSale,
 	orderMainAll,
+	orderAfterSale,
+	orderBatch,
 	orderSettingTemplate,
 	orderSettingLogistics,
 	orderSettingSelfAddr,

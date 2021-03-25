@@ -1,5 +1,5 @@
 <template>
-	<set-title title="">
+	<set-title title="批量发货">
 		<tpl-content />
 	</set-title>
 </template>

@@ -48,6 +48,15 @@ export const orderConfig = [
 		]
 	},
 	{
+		path: '/order/batch/result',
+		name: 'order-batch-result',
+		meta: { title: '' },
+		components: [
+			() => import('./modules/order-batch-result.vue'),
+			'left'
+		]
+	},
+	{
 		path: '/order/setting/basic',
 		name: 'order-setting-basic',
 		meta: { title: '' },
