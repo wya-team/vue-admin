@@ -24,3 +24,8 @@ export const URL_WEBSOCKET = '/wss';
  * 用于判断登录token / user
  */
 export const TOKEN_KEY = 'user';
+
+/**
+ * 用于判断用户记住密码
+ */
+export const ACCOUNT_KEY = 'userInfo';

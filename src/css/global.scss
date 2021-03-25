@@ -3,7 +3,7 @@
 @import "core/index";
 
 .g-c-main {
-	color: $main;
+	color: $main !important;
 }
 .g-bg-main {
 	background-color: $main;
@@ -16,4 +16,8 @@
 	display: inline-block;
 	width: calc(5em + 24px);
 	text-align: right;
+}
+
+.g-c-fe {
+	color: $cfe;
 }
