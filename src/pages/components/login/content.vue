@@ -298,11 +298,7 @@ export default {
 			const offsetMax = 5; // 若是点击时偏移量超出5px，则阻止触发打开链接的操作
 			this.offset.x = e.clientX - this.offset.x;
 			this.offset.y = e.clientY - this.offset.y;
-			if (Math.abs(this.offset.x) >= offsetMax || Math.abs(this.offset.y) >= offsetMax) {
-				this.offset.isDraging = true;
-			} else {
-				this.offset.isDraging = false;
-			}
+			this.offset.isDraging = Math.abs(this.offset.x) >= offsetMax || Math.abs(this.offset.y) >= offsetMax;
 		},
 		handleLink(item) {
 			if (item.link && !this.offset.isDraging) {
@@ -310,7 +306,7 @@ export default {
 			}
 		},
 		// 校验用户输入完成才能显示校验
-		handleValidate(cb) {
+		handleValidate() {
 			return this.$refs.form.validate().then(() => {
 				this.status.disabledBtn = false;
 			}).catch(() => {
@@ -321,11 +317,7 @@ export default {
 			this.focus[name] = true;
 		},
 		handleChangeBlur(name) {
-			if (this.formValidate[name]) {
-				this.focus[name] = true;
-			} else {
-				this.focus[name] = false;
-			}
+			this.focus[name] = !!this.formValidate[name];
 		},
 		// 查询是否微信回调登录
 		queryBind() {

@@ -96,9 +96,6 @@ export default {
 		},
 		disabled: { // 禁用
 			type: Boolean
-		},
-		getPopupContainer: {
-			type: Function
 		}
 	},
 	data() {
@@ -122,10 +119,6 @@ export default {
 		getImgSrc() {
 			return this.imgUrl + '?' + this.random;
 		}
-	},
-	destroyed() {
-		clearTimeout(this.timeoutTimer);
-		clearTimeout(this.successTimer);
 	},
 	methods: {
 		handleDragging() {
@@ -188,11 +181,17 @@ export default {
 					this.handleClose();
 					this.$emit('success'); // 校验成功
 				}, 1000);
+				this.$once('hook:beforeDestory', () => {
+					this.successTimer && clearTimeout(this.successTimer);
+				});
 			}).catch((err) => {
 				// 校验失败，恢复初始状态
 				this.isFail = true;
 				this.timeoutTimer && clearTimeout(this.timeoutTimer);
 				this.timeoutTimer = setTimeout(this.resetSlider, 1000);
+				this.$once('hook:beforeDestory', () => {
+					this.timeoutTimer && clearTimeout(this.timeoutTimer);
+				});
 			}).finally(() => {
 				this.drag.flag = false;
 			});
