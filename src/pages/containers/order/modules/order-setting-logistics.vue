@@ -1,5 +1,5 @@
 <template>
-	<set-title title="" style="padding: 24px">
+	<set-title title="物流设置" style="padding: 24px">
 		<tpl-filter />
 		<tpl-list />
 	</set-title>
