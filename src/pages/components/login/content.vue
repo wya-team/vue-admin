@@ -1,12 +1,12 @@
 <template>
 	<div class="v-login g-bg-white g-flex-holy">
-		<div class="_header">
-			<div class="_header-logo g-fs-30 g-c-000">
-				<img src="../../../assets/image/logo.png" alt="">
+		<div class="v-login__header">
+			<div class="v-login__header--logo g-fs-30 g-c-000">
+				<img src="~assets/image/logo.png" alt="">
 			</div>
 		</div>
-		<div class="_content">
-			<div class="_background">
+		<div class="v-login__layout">
+			<div class="v-login__layout--background">
 				<vc-carousel 
 					:height="600" 
 					:draggable="advertisement_image.length > 1" 
@@ -29,37 +29,37 @@
 					</vc-carousel-item>
 				</vc-carousel>
 			</div>
-			<div class="_content-layout g-flex g-relative">
-				<div class="_content-box">
+			<div class="v-login__layout--container g-flex g-relative">
+				<div class="v-login__layout--box">
 					<div 
-						:class="[ status.isCodeLogin ? 'computer' : 'code' ]" 
-						class="_login-switch"
+						:class="[ status.isCodeLogin ? 'is-computer' : 'is-code' ]" 
+						class="v-login__layout--switch"
 						@click="handleSwitchLogin"
 					/>
-					<div class="_content-tip">
-						<div class="_poptip">
-							<div class="_poptip-arrow">
+					<div class="v-login__tip">
+						<div class="v-login__tip--container">
+							<div class="v-login__tip--arrow">
 								<em />
 								<span />
 							</div>
-							<div class="_poptip-content">
+							<div>
 								<span v-if="status.isCodeLogin">密码登录</span> 
 								<span v-else>扫码登录</span>
 							</div>
 						</div>	
 					</div>
-					<div class="_container_box g-relative">
+					<div class="v-login__layout--content g-relative">
 						<div class="g-fs-16 g-lh-16 g-c-white" style="margin-bottom: 40px;">商家登录</div>
 						<!--扫码登录-->
 						<div v-show="status.isCodeLogin && !status.loginFail">
 							<div class="g-tc">
-								<div class="_content-box-code">
+								<div class="v-login__code">
 									<div 
 										id="code-container" 
-										:class="{ 'opcaticy': status.codeLose }"
-										class="_content-box-code-img"
+										:class="{ 'is-opcaticy': status.codeLose }"
+										class="v-login__code--img"
 									/>
-									<div v-if="status.codeLose" class="_content-warn">
+									<div v-if="status.codeLose" class="v-login__code--warn">
 										<vcm-icon 
 											type="again" 
 											class="g-fs-22 g-c-white g-pointer" 
@@ -80,10 +80,15 @@
 								ref="form" 
 								:model="formValidate" 
 								:rules="ruleValidate" 
-								class="_form g-m-t-20"
+								class="v-login__form g-m-t-20"
 							>
 								<vc-form-item prop="account" class="g-relative">
-									<div :class="[ focus.account ? '_focus' : '_un-focus' ]" class="_base g-c-white g-absolute">账号</div>
+									<div 
+										:class="[ focus.account ? 'v-login__form--focus' : 'v-login__form--un-focus' ]" 
+										class="v-login__form--base g-c-white g-absolute"
+									>
+										账号
+									</div>
 									<vc-input 
 										v-model="formValidate.account" 
 										:maxlength="20" 
@@ -93,7 +98,12 @@
 									/>
 								</vc-form-item>
 								<vc-form-item prop="pwd" class="g-relative">
-									<div :class="[ focus.pwd ? '_focus' : '_un-focus' ]" class="_base g-c-white g-absolute">密码</div>
+									<div 
+										:class="[ focus.pwd ? 'v-login__form--focus' : 'v-login__form--un-focus' ]" 
+										class="v-login__form--base g-c-white g-absolute"
+									>
+										密码
+									</div>
 									<vc-input 
 										ref="pwdInput"
 										v-model="formValidate.pwd" 
@@ -106,7 +116,7 @@
 									/>
 									<vcm-icon 
 										:type="getPwdInpueIcon"  
-										class="_invisible-icon g-absolute g-pointer g-c-bd"
+										class="v-login__form--visible g-absolute g-pointer g-c-bd"
 										@click="handleSwitchPwd"
 									/>
 								</vc-form-item>
@@ -123,6 +133,7 @@
 											long 
 											@click.prevent="handleLogin"
 										>
+											<!-- TODO: 滑块验证需要使用 handleValidate 方法 -->
 											登录
 										</vc-button> 
 									</template>		
@@ -134,8 +145,8 @@
 						</div>
 							
 						<!--登录失败-->
-						<div v-if="status.loginFail" class="_warn">
-							<div class="_warn-icon g-flex-cc">
+						<div v-if="status.loginFail" class="v-login__warn">
+							<div class="g-flex-cc">
 								<vcm-icon type="p-warning" class="g-c-main g-fs-60" />
 							</div>
 							<div class="g-tc g-m-t-25 g-fs-18 g-c-000">
@@ -431,14 +442,9 @@ export default {
 
 <style lang="scss">
 .v-login {
-	._background {
-		position: absolute;
-		width: 100%;
-		height: 600px;
-	}
 	width: 100%;
-	._header {
-		._header-logo {
+	.v-login__header {
+		.v-login__header--logo {
 			min-width: 1000px;
 			max-width: 1200px;
 			height: 88px;
@@ -448,22 +454,35 @@ export default {
 			letter-spacing: 2px;
 		}
 	}
-	._content {
+	.v-login__layout {
 		height:600px;
 		padding-top: 8px;
 		background-size: cover;
 		background-position-x: 20%;
-		._login-switch {
+		.v-login__layout--background {
+			position: absolute;
+			width: 100%;
+			height: 600px;
+		}
+		.v-login__layout--container {
+			min-width: 1000px;
+			max-width: 1080px;
+			margin: 0 auto;
+			overflow: hidden;
+			position: relative;
+			height: 600px;
+		}
+		.v-login__layout--switch {
 			position: absolute;
 			cursor: pointer;
-			&.code {
+			&.is-code {
 				width: 50px;
 				height: 50px;
 				top: 10px;
 				right: 10px;
 				background: url('~assets/image/login_code.png') no-repeat;
 			}
-			&.computer {
+			&.is-computer {
 				width: 28px;
 				height: 27px;
 				top: 17px;
@@ -471,11 +490,11 @@ export default {
 				background: url('~assets/image/login_computer.png') no-repeat;
 			}
 		}
-		&-tip {
+		.v-login__tip {
 			position: absolute;
 			top: 20px;
 			right: 58px;
-			._poptip {
+			.v-login__tip--container {
 				box-sizing: content-box;
 				height: 16px;
 				line-height: 16px;
@@ -484,7 +503,7 @@ export default {
 				border: 1px solid $main;
 				padding: 4px 8px;
 				position: relative;
-				&-arrow {
+				.v-login__tip--arrow {
 					position: absolute;
 					top: 6px;
 					right: 0px;
@@ -511,15 +530,7 @@ export default {
 				}
 			}
 		}
-		&-layout {
-			min-width: 1000px;
-			max-width: 1080px;
-			margin: 0 auto;
-			overflow: hidden;
-			position: relative;
-			height: 600px;
-		}
-		&-box {
+		.v-login__layout--box {
 			position: absolute;
 			top: 45%;
 			transform: translateY(-50%);
@@ -529,25 +540,26 @@ export default {
 			background:rgba(0,0,0,.6);
 			box-shadow:0px 0px 9px 1px rgba(29,64,193,0.26);
 			z-index: 999;
-			._container_box {
+			.v-login__layout--content {
 				margin: 36px 24px;
 			}
-			&-code {
+			.v-login__code {
 				width:174px;
 				height:174px;
 				margin: 48px auto 0;
 				position: relative;
-				.opcaticy {
+				border: 1px solid $cd9;
+				.is-opcaticy {
 					opacity: .1;
 				}
-				._content-warn {
+				.v-login__code--img {
+					width: 100%;
+					height: 100%;
+				}
+				.v-login__code--warn {
 					position: absolute;
 					top: 65px;
 					left: 24px;
-				}
-				&-img {
-					width: 100%;
-					height: 100%;
 				}
 				#code-container {
 					iframe {
@@ -556,24 +568,24 @@ export default {
 					}
 				}
 			}
-			._warn {
+			.v-login__warn {
 				margin-top: 76px;
 			}
 		}
-		._form {
-			._base {
+		.v-login__form {
+			.v-login__form--base {
 				transition: all .45s cubic-bezier(.23,1,.32,1);
 				transform-origin: left top;
 				z-index: 9;
 			}
-			._un-focus {
+			.v-login__form--un-focus {
 				font-size: 14px;
 			}
-			._focus {
+			.v-login__form--focus {
 				line-height: 12px;
 				transform: translate3d(0, -12px, 0) scale(1);
 			}
-			._invisible-icon {
+			.v-login__form--visible {
 				right: 0;
 				font-size: 20px;
 				margin: 6px 12px 0 0;

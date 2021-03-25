@@ -12,19 +12,19 @@
 	>
 		<slot />
 		<template #content>
-			<div class="slider-container">
-				<div class="_box">
+			<div class="c-slider__container">
+				<div class="c-slider__content">
 					<vcm-icon 
 						type="close" 
-						class="_box-close" 
+						class="c-slider__content--close" 
 						@click="handleClose"
 					/>
-					<div class="_box-header">
+					<div class="c-slider__content--header">
 						<span v-show="!isFail" class="g-fs-14 g-c-000">拖动下方滑块完成拼图</span>
 						<span v-show="isFail" class="g-c-error g-fs-14">请控制拼图块对齐缺口</span>
 						<span class="g-c-67 g-fr g-pointer" @click="handleRefresh">刷新</span>
 					</div>
-					<div class="_box-img">
+					<div class="c-slider__img">
 						<vm-draggable
 							:x.sync="x"
 							:handles="[]"
@@ -34,23 +34,23 @@
 							<img 
 								ref="imgSilde" 
 								:src="getImgSrc"
-								class="slider"
+								class="c-slider__img--slider"
 								alt="滑块"
 							>
 						</vm-draggable>
 						<img 
 							:src="getImgSrc" 
-							class="incomplete"
+							class="c-slider__img--incomplete"
 							alt="扣图"
 						>
-						<div v-show="isSuccess" class="_success g-tc">
-							<div class="icon g-m-b-5">
+						<div v-show="isSuccess" class="c-slider__img--success g-tc">
+							<div class="c-slider__img--icon g-m-b-5">
 								<vcm-icon type="p-success" />
 							</div>
-							<p>只用了{{ drag.time }}s，这速度简直完美</p>
+							<p class="c-slider__img--time">只用了{{ drag.time }}s，这速度简直完美</p>
 						</div>
 					</div>
-					<div class="_box-slider-container">
+					<div class="c-slider__footer">
 						<vm-draggable 
 							:x.sync="x"
 							:y="-7"
@@ -58,13 +58,13 @@
 							:w="45"
 							:h="24"
 							:parent="false"
-							class="_box-slider g-flex-cc"
+							class="c-slider__drag g-flex-cc"
 							@drag-end="handleEndDrag"
 							@dragging="handleDragging"
 						>
-							<span class="line" />
-							<span class="line g-m-lr-5" />
-							<span class="line" />
+							<span class="c-slider__drag--line" />
+							<span class="c-slider__drag--line g-m-lr-5" />
+							<span class="c-slider__drag--line" />
 						</vm-draggable>
 					</div>
 				</div>
@@ -78,7 +78,7 @@ import { Draggable } from '@wya/vm';
 import { Popover } from '@wya/vc';
 
 export default {
-	name: "xls-slider",
+	name: "v-slider",
 	components: {
 		'vm-draggable': Draggable,
 		'vc-popover': Popover
@@ -210,16 +210,16 @@ export default {
 	.vc-popover-core__container {
 		padding: 0;
 	}
-	.slider-container {
+	.c-slider__container {
 		width: 360px;
 		height: 270px;
 		padding: 27px 32px 18px;
 		background:$white;
-		box-shadow: 0px 0px 7px 1px rgba(0, 0, 0, 0.18);
+		box-shadow: 0px 0px 7px 1px $shadow-18;
 		z-index: 999;
-		._box {
+		.c-slider__content {
 			position: relative;
-			&-close {
+			.c-slider__content--close {
 				position: absolute;
 				right: -15px;
 				top: -17px;
@@ -227,61 +227,57 @@ export default {
 					cursor: pointer;
 				}
 			}
-			&-header {
+			.c-slider__content--header {
 				line-height: 21px;
 			}
-			&-img {
+			.c-slider__img {
 				width: 296px;
 				height: 172px;
 				margin-bottom: 16px;
 				overflow: hidden;
 				position: relative;
-				.full {
-					position: absolute;
-					top: -344px;
-				}
-				.slider {
+				.c-slider__img--slider {
 					position: absolute;
 					top: -172px;
 					z-index: 9;
 					transform: translate3d(0, 0, 0);
 				}
-				.incomplete {
+				.c-slider__img--incomplete {
 					position: absolute;
 					top: 0;
 				}
-				._success {
+				.c-slider__img--success {
 					position: absolute;
 					width: 100%;
 					height: 100%;
 					z-index: 10;
 					background: $white;
 					opacity: .9;
-					.icon {
+					.c-slider__img--icon {
 						font-size: 20px;
 						color: $light-green;
 						margin-top: 64px;
 					}
-					p {
+					.c-slider__img--time {
 						font-size: 14px;
 						color: $light-green;
 					}
 				}
 			}
-			&-slider-container {
+			.c-slider__footer {
 				width: 297px;
 				height: 12px;
 				background: $cd9;
 				border-radius: 6px;
 				position: relative;
 			}
-			&-slider {
+			.c-slider__drag {
 				position: absolute;
 				top: -7px;
 				left: 0px;
 				width: 45px;
 				height: 24px;
-				background: $blue-tint;
+				background: $blue-slider;
 				border-radius: 12px;
 				&:hover {
 					cursor: pointer;
@@ -291,15 +287,12 @@ export default {
 					align-items: center;
 					justify-content: center;
 				}
-				.line {
+				.c-slider__drag--line {
 					width: 2px;
 					height: 11px;
 					background: $white;
 					border-radius: 1px;
 				}
-			}
-			.fail {
-				transition: all 1s;
 			}
 		}
 	}
