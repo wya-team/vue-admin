@@ -213,7 +213,7 @@ export default {
 		width: 360px;
 		height: 270px;
 		padding: 27px 32px 18px;
-		background:$white;
+		background: $white;
 		box-shadow: 0px 0px 7px 1px rgba(0, 0, 0, 0.18);
 		z-index: 999;
 		.c-slider__content {
@@ -276,7 +276,7 @@ export default {
 				left: 0px;
 				width: 45px;
 				height: 24px;
-				background: $blue-slider;
+				background: $blue-tint;
 				border-radius: 12px;
 				&:hover {
 					cursor: pointer;
