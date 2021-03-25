@@ -1,5 +1,5 @@
 <template>
-	<set-title title="">
+	<set-title title="基础设置">
 		<tpl-content />
 	</set-title>
 </template>
