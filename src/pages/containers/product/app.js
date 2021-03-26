@@ -8,5 +8,14 @@ export const productConfig = [
 			'left',
 			'top'
 		]
+	},
+	{
+		path: '/product/goods/editor/:id?',
+		name: 'product-goods-editor',
+		meta: { title: '' },
+		components: [
+			() => import('./modules/product-goods-editor.vue'),
+			'left'
+		]
 	}
 ];
