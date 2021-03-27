@@ -28,7 +28,7 @@
 import { Portal } from '@wya/vc';
 
 const config = {
-	name: "vc-tpl-basic",
+	name: "tpl-product-goods-custom-spec",
 	props: {
 	},
 	data() {

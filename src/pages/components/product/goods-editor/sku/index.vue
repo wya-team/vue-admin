@@ -62,9 +62,6 @@ export default {
 			specList: [], // 选择规格下拉框的数据
 		};
 	},
-	computed: {
-
-	},
 	watch: {
 		specDataSource(data) {
 			this.curSpecDataSource = cloneDeep(data);

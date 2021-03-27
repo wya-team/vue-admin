@@ -59,16 +59,6 @@ export default {
 			defualt: () => ({})
 		}
 	},
-	data() {
-		return {
-		};
-	},
-	computed: {
-
-	},
-	watch: {
-		
-	},
 	mounted() {
 		if (this.info.spec_id) {
 			this.loadSpecValue(this.info.spec_id);
