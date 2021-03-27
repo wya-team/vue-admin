@@ -26,7 +26,7 @@ export default {
 	},
 	data() {
 		return {
-			step: 2,
+			step: 1,
 			STEPS: [
 				{ value: 1, label: '1、基本信息' },
 				{ value: 2, label: '2、商品详情' }

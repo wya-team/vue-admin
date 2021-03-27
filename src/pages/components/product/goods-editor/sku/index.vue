@@ -7,11 +7,10 @@
 			<span class="g-link-text" @click="handleManageSpec">规格管理</span>
 		</div>
 
-		<!-- TODO: 规格不能选一样 -->
 		<tpl-spec-item 
 			v-for="(spec, index) in curSpecDataSource"
 			:key="index"
-			:data-source="specList"
+			:data-source="getSelectableSpecList(spec)"
 			:info="spec"
 			@delete="handleDeleteSpecItem(index)"
 			@change="handleChangeSpec(arguments[0], index)"
@@ -81,6 +80,10 @@ export default {
 			}).then((res) => {
 				this.specList = res.data;
 			});
+		},
+		getSelectableSpecList({ spec_id }) {
+			let selectedSpec = this.curSpecDataSource.filter((it) => it.spec_id).map((it) => it.spec_id);
+			return this.specList.filter((it) => !selectedSpec.includes(it.spec_id) || it.spec_id == spec_id);
 		},
 		createTableDataSource() {
 			return combineSpec(this.curSpecDataSource).map((spec, i) => {
