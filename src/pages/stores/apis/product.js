@@ -15,5 +15,6 @@ const api = {
 	_PRODUCT_GOODS_EDITOR_SPEC_ADD_POST: '', // 新增规格
 	_PRODUCT_GOODS_EDITOR_SPEC_DELETE_POST: '', // 删除规格
 	_PRODUCT_GOODS_EDITOR_SPEC_SORT_POST: '', // 规格排序管理
+	_PRODUCT_GOODS_EDITOR_SKU_SN_EXIST_POST: '', // 当前货号是否存在
 };
 export default api;

@@ -2,7 +2,7 @@
 	<div class="v-product-goods-editor">
 		<vc-steps-bar v-model="step" :data-source="STEPS" readonly />
 
-		<tpl-basic v-if="step == 1" />
+		<tpl-basic v-if="step == 1" ref="basic" />
 		<tpl-detail v-else-if="step == 2" />
 
 		<vca-footer 
@@ -43,8 +43,11 @@ export default {
 	},
 	methods: {
 		handleCancel() {},
-		handleOk() {
-
+		async handleOk() {
+			if (this.step == 1) {
+				await this.$refs.basic.validate();
+				this.step = 2;
+			}
 		}
 	},
 };
@@ -53,5 +56,6 @@ export default {
 <style lang="scss">
 .v-product-goods-editor {
 	padding: 20px;
+	padding-bottom: 70px;
 }
 </style>

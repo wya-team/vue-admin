@@ -55,8 +55,10 @@
 				</vc-form-item>
 
 				<tpl-sku 
+					ref="sku"
 					:spec-data-source="formData.spec"
 					:table-data-source="formData.sku_table"
+					:product-image="(formData.image_list || [])[0]"
 				/>
 			</div>
 		</vc-form>
@@ -76,7 +78,9 @@ export default {
 	},
 	data() {
 		return {
-			formData: {},
+			formData: {
+				image_list: []
+			},
 			ruleValidate: {
 				product_name: [{ required: true, message: '请填写商品名称' }],
 				image_list: [{ required: true, message: '请选择商品主图' }],
@@ -84,17 +88,11 @@ export default {
 			}
 		};
 	},
-	computed: {
-
-	},
-	watch: {
-		
-	},
-	created() {
-		
-	},
 	methods: {
-
+		async validate() {
+			await this.$refs.sku.validate();
+			return this.$refs.form.validate();
+		}
 	},
 };
 </script>

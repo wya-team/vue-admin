@@ -7,24 +7,33 @@
 			<span class="g-link-text" @click="handleManageSpec">规格管理</span>
 		</div>
 
+		<!-- TODO: 规格不能选一样 -->
 		<tpl-spec-item 
 			v-for="(spec, index) in curSpecDataSource"
 			:key="index"
 			:data-source="specList"
-			:info.sync="curSpecDataSource[index]"
+			:info="spec"
 			@delete="handleDeleteSpecItem(index)"
+			@change="handleChangeSpec(arguments[0], index)"
 		/>
 
-		<tpl-table v-if="curSpecDataSource.length" :data-source="tableDataSource" />
+		<tpl-table 
+			v-if="curTableDataSource.length"
+			ref="table"
+			:data-source.sync="curTableDataSource"
+			:spec-data-source="curSpecDataSource"
+			:product-image="productImage"
+		/>
 	</vc-form-item>
 </template>
 
 <script>
-import { cloneDeep } from 'lodash';
+import { cloneDeep, isEqual } from 'lodash';
 import SpecItem from './spec-item';
 import Table from './table';
 import { CustomSpec } from './popup/custom-spec';
 import { ManageSpec } from './popup/manage-spec';
+import { combineSpec } from './utils';
 
 export default {
 	name: 'tpl-product-goods-sku',
@@ -42,7 +51,9 @@ export default {
 		tableDataSource: {
 			type: Array,
 			default: () => ([])
-		}
+		},
+		// 商品主图,拿第一张
+		productImage: String
 	},
 	data() {
 		return {
@@ -74,19 +85,30 @@ export default {
 				this.specList = res.data;
 			});
 		},
+		createTableDataSource() {
+			return combineSpec(this.curSpecDataSource).map((spec, i) => {
+				let { spec_value_arr } = spec;
+				let index = this.curTableDataSource.findIndex((table) => isEqual(table.spec_value_arr.sort(), spec_value_arr.sort()));
+				if (index > -1) return this.curTableDataSource[index];
+				return spec;
+			});
+		},
 		handleAddSpecItem() {
 			this.curSpecDataSource.push({
-				spec_value_list: [],
-				spec_and_value_info: []
+				spec_value_list: [], // 所有的规格值
+				spec_value_arr: [], // 选中的规格值
 			});
 		},
 		handleDeleteSpecItem(index) {
 			this.curSpecDataSource.splice(index, 1);
 		},
+		handleChangeSpec(specInfo, index) {
+			this.$set(this.curSpecDataSource, index, specInfo);
+			this.curTableDataSource = this.createTableDataSource(); // 更改规格需要重新生成表格数据
+		},
 		handleAddCustomSpec() {
 			CustomSpec.popup({
 			}).then((spec) => {
-				console.log('spec', spec);
 				this.specList.push(spec);
 			});
 		},
@@ -97,6 +119,12 @@ export default {
 				this.specList = cloneDeep(specList);
 			});
 		},
+		validate() {
+			if (this.$refs.table) {
+				return this.$refs.table.validate();
+			}
+			return Promise.resolve();
+		}
 	},
 };
 </script>

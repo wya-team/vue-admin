@@ -22,14 +22,14 @@
 		</div>
 		<div class="g-pd-24">
 			<vc-checkbox-group 
-				:value="info.spec_and_value_info"
+				:value="info.spec_value_arr"
 				class="g-inline-block"
 				@change="handleSelectSpecValue"
 			>
 				<vc-checkbox 
 					v-for="(it, index) in info.spec_value_list"
 					:key="index"
-					:label="it.spec_value_id + '#' + it.spec_value_name + '#'"
+					:label="it.spec_value_id"
 					class="_spec-value-item"
 				>
 					{{ it.spec_value_name }}
@@ -84,12 +84,18 @@ export default {
 				this.sync({ spec_value_list: res.data });
 			});
 		},
-		handleSelectSpecType(spec_id) {
-			this.sync({ spec_id });
+		handleSelectSpecType(spec_id, spec_name) {
+			this.sync({ spec_id, spec_name });
 			this.loadSpecValue(spec_id);
 		},
 		handleSelectSpecValue(value) {
-			this.sync({ spec_and_value_info: value });
+			this.sync({ 
+				spec_value_arr: value,
+				spec_name_arr: value.map((id) => {
+					let specObj = this.info.spec_value_list.find(it => it.spec_value_id == id);
+					return specObj.spec_value_name;
+				})
+			});
 		},
 		handleAddSpecValue() {
 			AddSpecValue.popup({
@@ -112,7 +118,7 @@ export default {
 			});
 		},
 		sync(value) {
-			this.$emit('update:info', { ...this.info, ...value });
+			this.$emit('change', { ...this.info, ...value });
 		}
 	},
 };
