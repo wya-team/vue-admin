@@ -3,7 +3,7 @@
 		<vc-steps-bar v-model="step" :data-source="STEPS" readonly />
 
 		<tpl-basic v-if="step == 1" ref="basic" />
-		<tpl-detail v-else-if="step == 2" />
+		<tpl-detail v-else-if="step == 2" value="" />
 
 		<vca-footer 
 			:ok-text="okText"
@@ -26,7 +26,7 @@ export default {
 	},
 	data() {
 		return {
-			step: 1,
+			step: 2,
 			STEPS: [
 				{ value: 1, label: '1、基本信息' },
 				{ value: 2, label: '2、商品详情' }
