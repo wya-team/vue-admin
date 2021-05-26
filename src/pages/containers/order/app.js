@@ -1,14 +1,116 @@
+// 导航路由
+export const orderNavConfig = {
+	path: '/order',
+	title: '订单',
+	level: 1,
+	children: [
+		{
+			path: '/order/main',
+			title: '订单列表',
+			level: 2,
+			children: [
+				{
+					path: '/order/main/all',
+					name: 'order-main-all',
+					title: '订单列表',
+					level: 3,
+					components: [
+						() => import('./modules/order-main-all.vue'),
+						'left',
+						'top'
+					]
+				}
+			]
+		},
+		{
+			path: '/order/after-sale',
+			name: 'order-after-sale',
+			title: '售后列表',
+			level: 2,
+			components: [
+				() => import('./modules/order-after-sale.vue'),
+				'left',
+				'top'
+			]
+		},
+		{
+			path: '/order/batch',
+			name: 'order-batch',
+			title: '批量处理',
+			level: 2,
+			components: [
+				() => import('./modules/order-batch.vue'),
+				'left',
+				'top'
+			]
+		},
+		{
+			path: '/order/setting',
+			title: '订单设置',
+			level: 2,
+			children: [
+				{
+					path: '/order/setting/basic',
+					name: 'order-setting-basic',
+					title: '基础设置',
+					level: 3,
+					components: [
+						() => import('./modules/order-setting-basic.vue'),
+						'left',
+						'top'
+					]
+				},
+				{
+					path: '/order/setting/template',
+					name: 'order-setting-template',
+					title: '运费模板',
+					level: 3,
+					components: [
+						() => import('./modules/order-setting-template.vue'),
+						'left',
+						'top'
+					]
+				},
+				{
+					path: '/order/setting/postage',
+					name: 'order-setting-postage',
+					title: '包邮设置',
+					level: 3,
+					components: [
+						() => import('./modules/order-setting-postage.vue'),
+						'left',
+						'top'
+					]
+				},
+				{
+					path: '/order/setting/logistics',
+					name: 'order-setting-logistics',
+					title: '物流设置',
+					level: 3,
+					components: [
+						() => import('./modules/order-setting-logistics.vue'),
+						'left',
+						'top'
+					]
+				},
+				{
+					path: '/order/setting/self-addr',
+					name: 'order-setting-self-addr',
+					title: '自提点',
+					level: 3,
+					components: [
+						() => import('./modules/order-setting-self-addr.vue'),
+						'left',
+						'top'
+					]
+				}
+			]
+		}
+	]
+};
+
+// 非导航路由
 export const orderConfig = [
-	{
-		path: '/order/main/all',
-		name: 'order-main-all',
-		meta: { title: '' },
-		components: [
-			() => import('./modules/order-main-all.vue'),
-			'left',
-			'top'
-		]
-	},
 	{
 		path: '/order/main/all/detail',
 		name: 'order-main-all-detail',
@@ -16,16 +118,6 @@ export const orderConfig = [
 		components: [
 			() => import('./modules/order-main-all-detail.vue'),
 			'left'
-		]
-	},
-	{
-		path: '/order/after-sale',
-		name: 'order-after-sale',
-		meta: { title: '' },
-		components: [
-			() => import('./modules/order-after-sale.vue'),
-			'left',
-			'top'
 		]
 	},
 	{
@@ -54,56 +146,6 @@ export const orderConfig = [
 		components: [
 			() => import('./modules/order-batch-result.vue'),
 			'left'
-		]
-	},
-	{
-		path: '/order/setting/basic',
-		name: 'order-setting-basic',
-		meta: { title: '' },
-		components: [
-			() => import('./modules/order-setting-basic.vue'),
-			'left',
-			'top'
-		]
-	},
-	{
-		path: '/order/setting/template',
-		name: 'order-setting-template',
-		meta: { title: '' },
-		components: [
-			() => import('./modules/order-setting-template.vue'),
-			'left',
-			'top'
-		]
-	},
-	{
-		path: '/order/setting/postage',
-		name: 'order-setting-postage',
-		meta: { title: '' },
-		components: [
-			() => import('./modules/order-setting-postage.vue'),
-			'left',
-			'top'
-		]
-	},
-	{
-		path: '/order/setting/logistics',
-		name: 'order-setting-logistics',
-		meta: { title: '' },
-		components: [
-			() => import('./modules/order-setting-logistics.vue'),
-			'left',
-			'top'
-		]
-	},
-	{
-		path: '/order/setting/self-addr',
-		name: 'order-setting-self-addr',
-		meta: { title: '' },
-		components: [
-			() => import('./modules/order-setting-self-addr.vue'),
-			'left',
-			'top'
 		]
 	}
 ];

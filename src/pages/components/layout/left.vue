@@ -6,32 +6,30 @@
 			</div>
 			<template v-for="(chunk, index) in chunks">
 				<router-link 
-					v-if="chunk.show"
 					:key="index"
-					:to="chunk.route"
-					:class="currentChunk.value === chunk.value ? '__chunk-item-active' : '__chunk-item-unactive'" 
+					:to="chunk.path"
+					:class="currentChunk.path === chunk.path ? '__chunk-item-active' : '__chunk-item-unactive'" 
 					class="__chunk-item"
 				>
 					<i class="iconfont icon-add g-m-r-10" />
-					{{ chunk.name }}
+					{{ chunk.title }}
 				</router-link>
 			</template>
 		</div>
 		<div v-if="childMenus.length" class="_two-level">
 			<div class="__name">
-				{{ currentChunk.name }}
+				{{ currentChunk.title }}
 			</div>
 			<div style="padding: 12px">
 				<template v-for="(menu, index) in childMenus">
-					<div 
-						v-if="menu.show"
+					<router-link 
 						:key="index"
-						:class="currentChildRoute === menu.route ? '__menu-item-active' : '__menu-item-unactive'" 
+						:to="menu.path"
+						:class="navRouteMap.towLevel === menu.path ? '__menu-item-active' : '__menu-item-unactive'" 
 						class="__menu-item"
-						@click="handleLinkTo(menu.route)"
 					>
-						{{ menu.name }}
-					</div>
+						{{ menu.title }}
+					</router-link>
 				</template>
 			</div>
 		</div>
@@ -39,9 +37,7 @@
 </template>
 
 <script>
-import { getChunks } from './menu/chunks';
-import { getChildMenus } from './menu/left/root';
-import { getTopMenus } from "./menu/top/root";
+import { NAV_DATA } from './nav-config';
 
 export default {
 	name: 'tpl-layout-left',
@@ -57,31 +53,24 @@ export default {
 	},
 	computed: {
 		chunks() {
-			let array = getChunks(this.$global.auth);
-			return array.filter((it) => it.show);
+			return NAV_DATA;
 		},
-		/**
-		 * 每个路由都一个name，格式：tpl-xxx-xxx，
-		 * 不取route.path是因为正式环境下前面会加一级路由，不好判断
-		 */
+		navRouteMap() {
+			let routeArray = this.$route.path.split('/');
+			let oneLevel = `/${routeArray[1]}`;
+			let towLevel = `${oneLevel}/${routeArray[2]}`;
+			let threeLevel = `${towLevel}/${routeArray[3]}`;
+			return { oneLevel, towLevel, threeLevel };
+		},
 		currentChunk() {
-			let routeName = this.$route.path.split('/');
-			return this.chunks.filter(chunk => chunk.value === routeName[1])[0] || {};
+			return this.chunks.filter(chunk => chunk.path === this.navRouteMap.oneLevel)[0] || {};
 		},
 		/**
 		 * 获取二级导航菜单
 		 */
 		childMenus() {
-			let children = getChildMenus(this.$global.auth)[this.currentChunk.value] || [];
-			return children.filter((child) => child.show);
+			return this.currentChunk.children || [];
 		},
-		/**
-		 * 获取当前二级导航路由，避免出现相近的路由情况而导致判断不正确
-		 */
-		currentChildRoute() {
-			let path = this.$route.path.split('/');
-			return path.splice(0, 3).join('/');
-		}
 	},
 	watch: {
 		childMenus(newVal, oldVal) {
@@ -102,18 +91,6 @@ export default {
 	methods: {
 		emitLeftMenuWidth() {
 			this.$vc.emit('layout-left-menu', { distance: this.childMenus.length ? 232 : 102 });
-		},
-		getIndexRoute(route) {
-			// 如果top内有对应的menu.route，则获取第一个有权限的路由，进行跳转
-			let routes = getTopMenus(this.$global.auth)[route] || [];
-			if (typeof routes === 'string') {
-				return route;
-			}
-			let authRoutes = routes.filter((it) => it.show);
-			return authRoutes.length ? authRoutes[0].route : route;
-		},
-		handleLinkTo(route) {
-			this.$router.push(this.getIndexRoute(route));
 		},
 	},
 };
@@ -170,7 +147,7 @@ export default {
 			cursor: pointer;
 			margin-bottom: 5px;
 			text-align: center;
-
+			display: block;
 		}
 		.__menu-item-unactive {
 			color: #676767;

@@ -6,19 +6,19 @@
 		<div v-else-if="(topMenus instanceof Array)" class="g-flex-ac g-fw-w">
 			<router-link 
 				v-for="(menu) in topMenus"
-				:key="menu.route"
-				:to="menu.route"
-				:class="$route.path.indexOf(menu.route) > -1 ? '_menu-item-active' : '_menu-item-unactive'" 
+				:key="menu.path"
+				:to="menu.path"
+				:class="$route.path.indexOf(menu.path) > -1 ? '_menu-item-active' : '_menu-item-unactive'" 
 				class="_menu-item"
 			>
-				{{ menu.name }}
+				{{ menu.title }}
 			</router-link>
 		</div>
 	</div>
 </template>
 
 <script>
-import { getTopMenus } from "./menu/top/root";
+import { NAV_DATA } from './nav-config';
 
 export default {
 	name: 'tpl-layout-top',
@@ -34,18 +34,17 @@ export default {
 		};
 	},
 	computed: {
-		currentRoute() {
-			let path = this.$route.path.split('/');
-			let index = path.indexOf('tpl');
-			if (index > -1) path.splice(index, 1);
-			path.length > 3 && path.splice(-1, 1);
-
-			return path.join('/');
+		navRouteArray() {
+			let routeArray = this.$route.path.split('/');
+			let oneLevel = `/${routeArray[1]}`;
+			let towLevel = `${oneLevel}/${routeArray[2]}`;
+			let threeLevel = `${towLevel}/${routeArray[3]}`;
+			return [oneLevel, towLevel, threeLevel];
 		},
 		topMenus() {
-			let routes = getTopMenus(this.$global.auth)[this.currentRoute];
-			return routes;
-		}
+			console.log('chunk', this.findMenu(NAV_DATA, 0));
+			return this.findMenu(NAV_DATA, 0);
+		},
 	},
 	watch: {
 		
@@ -66,6 +65,21 @@ export default {
 		setLeftDistance({ distance }) {
 			this.leftMenuWidth !== distance && (this.leftMenuWidth = distance);
 		},
+		findMenu(data, index) {
+			return data.reduce((pre, cur) => {
+				const { path, children } = cur;
+				const curLevelNav = this.navRouteArray[index];
+				const hasChildren = children && children.length > 0;
+				if (path === curLevelNav) {
+					if (index < 1 && hasChildren) {
+						pre = this.findMenu(children, index + 1);
+					} else {
+						pre = hasChildren ? children : cur.title;
+					}	
+				}
+				return pre;
+			}, []);
+		}
 	},
 };
 </script>

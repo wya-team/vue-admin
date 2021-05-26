@@ -6,6 +6,11 @@ const hasOther = (module) => {
 
 	return (fs.existsSync(fullpath) ? fs.readFileSync(fullpath, 'utf-8') : '').includes('OtherConfig');
 };
+const hasNav = (module) => {
+	let fullpath = resolve(__dirname, `../../src/pages/containers/${module}/app.js`);
+
+	return (fs.existsSync(fullpath) ? fs.readFileSync(fullpath, 'utf-8') : '').includes('NavConfig');
+};
 
 const h2c = (value) => {
 	return value

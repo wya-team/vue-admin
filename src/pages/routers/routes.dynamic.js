@@ -2,13 +2,13 @@ import { cloneDeep } from 'lodash';
 import Router from 'vue-router';
 import { Storage } from '@utils/utils';
 import { TOKEN_KEY } from '@constants/constants';
+import { NAV_DATA } from '@components/layout/nav-config';
 import Layout from '@components/layout/layout';
 import Left from '@components/layout/left';
 import Top from '@components/layout/top';
 /**
  * 用于排序
  */
-import { getChunks } from '@components/layout/menu/chunks';
 import { Global } from './_global';
 
 class RoutesManager {
@@ -18,8 +18,9 @@ class RoutesManager {
 			: require('./routes.dist');
 
 		this.basicRoutes = basicRoutes || {};
-		this.layoutRoutes = layoutRoutes || {};
-		this.dynamicRoutes = dynamicRoutes || {};
+		this.layoutRoutes = layoutRoutes || [];
+		this.dynamicRoutes = dynamicRoutes || [];
+		this.navRoutes = this._flatNavRoutes(NAV_DATA) || [];
 
 		this.router = null;
 		this.config = this._init();
@@ -68,13 +69,21 @@ class RoutesManager {
 		);
 	}
 
-	getRoutes(targetRoutes) {
-		targetRoutes = cloneDeep(targetRoutes || { ...this.layoutRoutes, ...this.dynamicRoutes });
-
-		let allRoutes = getChunks().reduce((pre, cur) => {
-			targetRoutes[cur.value] && pre.push(...targetRoutes[cur.value]);
+	_flatNavRoutes(data) {
+		return data.reduce((pre, cur) => {
+			const { children } = cur;
+			const hasChildren = children && children.length > 0;
+			if (hasChildren) {
+				pre.push(...this._flatNavRoutes(children));
+			} else {
+				pre.push(cur);
+			}
 			return pre;
 		}, []);
+	}
+
+	getRoutes(targetRoutes) {
+		let allRoutes = cloneDeep(targetRoutes || [...this.layoutRoutes, ...this.navRoutes, ...this.dynamicRoutes]);
 
 		// 筛选出有权限的路由
 		let authRoutes = allRoutes.filter((route) => {
@@ -85,7 +94,7 @@ class RoutesManager {
 		let temp = [];
 		let routes = authRoutes.reduce((pre, route) => {
 			// 一、二级路由url如果页面，则不做redirect
-			if (route.path.split('/').length < 4) {
+			if (route.path.split('/').length < 4 && !route.redirect) {
 				temp.push(route.path);
 			}
 			let redirect = this.getRedirect(route.path);
@@ -105,7 +114,6 @@ class RoutesManager {
 			pre.push(this.rebuildRoute(route));
 			return pre;
 		}, []);
-
 		return routes;
 	}
 
@@ -136,6 +144,10 @@ class RoutesManager {
 			? route
 			: {
 				...route,
+				meta: {
+					title: route.title,
+					...route.meta,
+				},
 				components: {
 					default: () => ({
 						component: route.components[0]()
