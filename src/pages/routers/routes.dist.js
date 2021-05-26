@@ -1,9 +1,9 @@
 import Vue from 'vue';
 import { PRE_ROUTER_URL } from '../constants/constants';
 import { loginConfig } from '../containers/login/app';
-import { settingNavConfig, settingConfig } from '../containers/setting/app';
-import { productNavConfig, productConfig } from '../containers/product/app';
-import { orderNavConfig, orderConfig } from '../containers/order/app';
+import { settingConfig } from '../containers/setting/app';
+import { productConfig } from '../containers/product/app';
+import { orderConfig } from '../containers/order/app';
 
 // 开放式路由（未登录），不支持Layout组件的管理
 export const basicRoutes = {

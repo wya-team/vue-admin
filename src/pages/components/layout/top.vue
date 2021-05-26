@@ -42,7 +42,6 @@ export default {
 			return [oneLevel, towLevel, threeLevel];
 		},
 		topMenus() {
-			console.log('chunk', this.findMenu(NAV_DATA, 0));
 			return this.findMenu(NAV_DATA, 0);
 		},
 	},

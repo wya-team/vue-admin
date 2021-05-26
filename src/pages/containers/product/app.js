@@ -2,13 +2,11 @@
 export const productNavConfig = {
 	path: '/product',
 	title: '商品',
-	level: 1,
 	children: [
 		{
 			path: '/product/category',
 			name: 'product-category',
 			title: '商品分类',
-			level: 2,
 			components: [
 				() => import('./modules/product-category.vue'),
 				'left',

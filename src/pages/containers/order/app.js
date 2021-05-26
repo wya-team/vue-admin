@@ -2,18 +2,15 @@
 export const orderNavConfig = {
 	path: '/order',
 	title: '订单',
-	level: 1,
 	children: [
 		{
 			path: '/order/main',
 			title: '订单列表',
-			level: 2,
 			children: [
 				{
 					path: '/order/main/all',
 					name: 'order-main-all',
 					title: '订单列表',
-					level: 3,
 					components: [
 						() => import('./modules/order-main-all.vue'),
 						'left',
@@ -26,7 +23,6 @@ export const orderNavConfig = {
 			path: '/order/after-sale',
 			name: 'order-after-sale',
 			title: '售后列表',
-			level: 2,
 			components: [
 				() => import('./modules/order-after-sale.vue'),
 				'left',
@@ -37,7 +33,6 @@ export const orderNavConfig = {
 			path: '/order/batch',
 			name: 'order-batch',
 			title: '批量处理',
-			level: 2,
 			components: [
 				() => import('./modules/order-batch.vue'),
 				'left',
@@ -47,13 +42,11 @@ export const orderNavConfig = {
 		{
 			path: '/order/setting',
 			title: '订单设置',
-			level: 2,
 			children: [
 				{
 					path: '/order/setting/basic',
 					name: 'order-setting-basic',
 					title: '基础设置',
-					level: 3,
 					components: [
 						() => import('./modules/order-setting-basic.vue'),
 						'left',
@@ -64,7 +57,6 @@ export const orderNavConfig = {
 					path: '/order/setting/template',
 					name: 'order-setting-template',
 					title: '运费模板',
-					level: 3,
 					components: [
 						() => import('./modules/order-setting-template.vue'),
 						'left',
@@ -75,7 +67,6 @@ export const orderNavConfig = {
 					path: '/order/setting/postage',
 					name: 'order-setting-postage',
 					title: '包邮设置',
-					level: 3,
 					components: [
 						() => import('./modules/order-setting-postage.vue'),
 						'left',
@@ -86,7 +77,6 @@ export const orderNavConfig = {
 					path: '/order/setting/logistics',
 					name: 'order-setting-logistics',
 					title: '物流设置',
-					level: 3,
 					components: [
 						() => import('./modules/order-setting-logistics.vue'),
 						'left',
@@ -97,7 +87,6 @@ export const orderNavConfig = {
 					path: '/order/setting/self-addr',
 					name: 'order-setting-self-addr',
 					title: '自提点',
-					level: 3,
 					components: [
 						() => import('./modules/order-setting-self-addr.vue'),
 						'left',

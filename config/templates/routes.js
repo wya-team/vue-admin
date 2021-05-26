@@ -36,13 +36,13 @@ const routes = (opts = {}) => {
 			: contents += `import { ${_item}Config } from '../containers/${item}/app';\n`;
 	});
 	contents += `\n`;
-	contents += `export const dynamicRoutes = {\n`;
+	contents += `export const dynamicRoutes = [\n`;
 	modules.forEach((item) => {
 		let _item = h2c(item === '__tpl__' ? 'tpl' : item);
 		// 动态路由不放other config
-		contents += `	${_item}: ${_item}Config,\n`;
+		contents += `	...${_item}Config,\n`;
 	});
-	contents += `};`;
+	contents += `];`;
 	contents += `\n`;
 	contents += `export const basicRoutes = {\n`;
 	contents += `	base: PRE_ROUTER_URL,\n`;

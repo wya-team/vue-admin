@@ -5,13 +5,11 @@ export const settingNavConfig = {
 	path: '/setting',
 	name: 'setting',
 	title: '设置',
-	level: 1,
 	children: [
 		{
 			path: '/setting/task',
 			name: 'setting-task',
 			title: '任务管理',
-			level: 2,
 			components: [
 				() => import('./modules/setting-task.vue'),
 				'left',
@@ -22,7 +20,6 @@ export const settingNavConfig = {
 			path: '/setting/log',
 			name: 'setting-log',
 			title: '操作日志',
-			level: 2,
 			components: [
 				() => import('./modules/setting-log.vue'),
 				'left',
