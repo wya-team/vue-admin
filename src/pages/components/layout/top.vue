@@ -34,15 +34,12 @@ export default {
 		};
 	},
 	computed: {
-		navRouteArray() {
+		chunkPath() {
 			let routeArray = this.$route.path.split('/');
-			let oneLevel = `/${routeArray[1]}`;
-			let towLevel = `${oneLevel}/${routeArray[2]}`;
-			let threeLevel = `${towLevel}/${routeArray[3]}`;
-			return [oneLevel, towLevel, threeLevel];
+			return `/${routeArray[1]}`;
 		},
 		topMenus() {
-			return this.findMenu(NAV_DATA, 0);
+			return this.findTopMenu(NAV_DATA);
 		},
 	},
 	watch: {
@@ -64,17 +61,22 @@ export default {
 		setLeftDistance({ distance }) {
 			this.leftMenuWidth !== distance && (this.leftMenuWidth = distance);
 		},
-		findMenu(data, index) {
+		findTopMenu(data) {
 			return data.reduce((pre, cur) => {
 				const { path, children } = cur;
-				const curLevelNav = this.navRouteArray[index];
 				const hasChildren = children && children.length > 0;
-				if (path === curLevelNav) {
-					if (index < 1 && hasChildren) {
-						pre = this.findMenu(children, index + 1);
+				if (path === this.chunkPath) { // 一级导航
+					if (hasChildren) {
+						const index = children.findIndex((it) => this.$route.path.includes(it.path));
+						const secdMenus = children[index]; // 二级导航
+						if (secdMenus.children && secdMenus.children.length) {
+							pre = secdMenus.children; // 三级导航
+						} else {
+							pre = secdMenus.title;
+						}
 					} else {
-						pre = hasChildren ? children : cur.title;
-					}	
+						pre = cur.title;
+					}
 				}
 				return pre;
 			}, []);

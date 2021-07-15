@@ -25,7 +25,7 @@
 					<router-link 
 						:key="index"
 						:to="menu.path"
-						:class="navRouteMap.towLevel === menu.path ? '__menu-item-active' : '__menu-item-unactive'" 
+						:class="$route.path.includes(menu.path) ? '__menu-item-active' : '__menu-item-unactive'" 
 						class="__menu-item"
 					>
 						{{ menu.title }}
@@ -55,15 +55,10 @@ export default {
 		chunks() {
 			return NAV_DATA;
 		},
-		navRouteMap() {
+		currentChunk() {
 			let routeArray = this.$route.path.split('/');
 			let oneLevel = `/${routeArray[1]}`;
-			let towLevel = `${oneLevel}/${routeArray[2]}`;
-			let threeLevel = `${towLevel}/${routeArray[3]}`;
-			return { oneLevel, towLevel, threeLevel };
-		},
-		currentChunk() {
-			return this.chunks.filter(chunk => chunk.path === this.navRouteMap.oneLevel)[0] || {};
+			return this.chunks.filter(chunk => chunk.path === oneLevel)[0] || {};
 		},
 		/**
 		 * 获取二级导航菜单
