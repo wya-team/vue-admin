@@ -25,7 +25,7 @@
 					<router-link 
 						:key="index"
 						:to="menu.path"
-						:class="$route.path.includes(menu.path) ? '__menu-item-active' : '__menu-item-unactive'" 
+						:class="$route.path.indexOf(menu.path) === 0 ? '__menu-item-active' : '__menu-item-unactive'" 
 						class="__menu-item"
 					>
 						{{ menu.title }}

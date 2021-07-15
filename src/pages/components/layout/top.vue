@@ -8,7 +8,7 @@
 				v-for="(menu) in topMenus"
 				:key="menu.path"
 				:to="menu.path"
-				:class="$route.path.indexOf(menu.path) > -1 ? '_menu-item-active' : '_menu-item-unactive'" 
+				:class="$route.path.indexOf(menu.path) === 0 ? '_menu-item-active' : '_menu-item-unactive'" 
 				class="_menu-item"
 			>
 				{{ menu.title }}
@@ -67,7 +67,7 @@ export default {
 				const hasChildren = children && children.length > 0;
 				if (path === this.chunkPath) { // 一级导航
 					if (hasChildren) {
-						const index = children.findIndex((it) => this.$route.path.includes(it.path));
+						const index = children.findIndex((it) => this.$route.path.indexOf(it.path) === 0);
 						const secdMenus = children[index]; // 二级导航
 						if (secdMenus.children && secdMenus.children.length) {
 							pre = secdMenus.children; // 三级导航
